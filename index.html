@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulario de Datos Personales</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      form {
+        max-width: 400px;
+        margin: auto;
+      }
+      label {
+        display: block;
+        margin-top: 15px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+      }
+      .success {
+        color: green;
+        margin-top: 20px;
+      }
+      .error {
+        color: red;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Formulario de Datos Personales</h2>
+    <form id="datosForm">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required />
+
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" name="apellidos" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="direccion">Dirección postal:</label>
+      <textarea id="direccion" name="direccion" required></textarea>
+
+      <label for="fecha">Fecha de nacimiento:</label>
+      <input type="date" id="fecha" name="fecha" required />
+
+      <button type="submit">Enviar</button>
+    </form>
+    <div id="mensaje"></div>
+    <script>
+      document
+        .getElementById("datosForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const datos = {
+            nombre: document.getElementById("nombre").value,
+            apellidos: document.getElementById("apellidos").value,
+            email: document.getElementById("email").value,
+            direccion: document.getElementById("direccion").value,
+            fecha_nacimiento: document.getElementById("fecha").value,
+          };
+          try {
+            const res = await fetch("/guardar", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(datos),
+            });
+            const result = await res.json();
+            if (res.ok) {
+              document.getElementById("mensaje").innerHTML =
+                '<span class="success">' + result.mensaje + "</span>";
+            } else {
+              document.getElementById("mensaje").innerHTML =
+                '<span class="error">' + result.error + "</span>";
+            }
+          } catch (err) {
+            document.getElementById("mensaje").innerHTML =
+              '<span class="error">Error de conexión</span>';
+          }
+        });
+    </script>
+  </body>
+</html>
