@@ -1,3 +1,4 @@
 Flask==3.1.2
 python-dotenv==1.1.1
-openai-agents==0.3.2
+# openai-agents brings litellm via the [litellm] extra; we omit a direct pin so it can float within the allowed range
+openai-agents[litellm]==0.3.2
