@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+import os
 
-from agents import Agent, Runner, function_tool, set_tracing_disabled
+from agents import Agent, ModelSettings, Runner, function_tool
 from agents.extensions.models.litellm_model import LitellmModel
+from litellm import api_key
+
+from dotenv import load_dotenv
 
 @function_tool
 def get_weather(city: str):
@@ -21,23 +25,20 @@ async def main(model: str, api_key: str):
 
     result = await Runner.run(agent, "What's the weather in Tokyo?")
     print(result.final_output)
+    print(result.context_wrapper.usage)
 
 
 if __name__ == "__main__":
-    # First try to get model/api key from args
-    import argparse
+    # Load environment variables from .env if present
+    load_dotenv()
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--model", type=str, required=False)
-    parser.add_argument("--api-key", type=str, required=False)
-    args = parser.parse_args()
+    # Strict: only read these .env keys.
+    model = os.getenv("MODEL")
+    # Accept only provider-specific canonical keys
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
-    model = args.model
     if not model:
-        model = input("Enter a model name for Litellm: ")
-
-    api_key = args.api_key
-    if not api_key:
-        api_key = input("Enter an API key for Litellm: ")
-
+        raise SystemExit("Missing MODEL in .env")
+    
     asyncio.run(main(model, api_key))
