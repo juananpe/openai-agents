@@ -1,0 +1,30 @@
+[
+  {
+    "nombre": "María",
+    "apellidos": "González",
+    "email": "maria.gonzalez@email.com",
+    "direccion": "Avenida Principal 456",
+    "fecha_nacimiento": "1988-11-15"
+  },
+  {
+    "nombre": "Carlos",
+    "apellidos": "Rodríguez",
+    "email": "carlos.rodriguez@email.com",
+    "direccion": "Plaza Mayor 789",
+    "fecha_nacimiento": "1992-03-22"
+  },
+  {
+    "nombre": "Ana",
+    "apellidos": "Martínez",
+    "email": "ana.martinez@email.com",
+    "direccion": "Calle del Sol 321",
+    "fecha_nacimiento": "1985-09-08"
+  },
+  {
+    "nombre": "Luis",
+    "apellidos": "López",
+    "email": "luis.lopez@email.com",
+    "direccion": "Paseo de la Reforma 654",
+    "fecha_nacimiento": "1993-07-12"
+  }
+]
